@@ -30,7 +30,7 @@ namespace FamilyTree
             if (id < 001) condiciones = false;
             if (padre != null)
             {
-                if (asignarPadre(padre))
+                if (!asignarPadre(padre))
                     condiciones = false;
             }
             if (madre != null)
