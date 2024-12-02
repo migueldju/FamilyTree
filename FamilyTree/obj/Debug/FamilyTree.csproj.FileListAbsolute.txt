@@ -4,3 +4,9 @@ C:\Users\Miguel de Juan Urien\Documents\VyP\FamilyTree\FamilyTree\obj\Debug\Fami
 C:\Users\Miguel de Juan Urien\Documents\VyP\FamilyTree\FamilyTree\obj\Debug\FamilyTree.csproj.CoreCompileInputs.cache
 C:\Users\Miguel de Juan Urien\Documents\VyP\FamilyTree\FamilyTree\obj\Debug\FamilyTree.dll
 C:\Users\Miguel de Juan Urien\Documents\VyP\FamilyTree\FamilyTree\obj\Debug\FamilyTree.pdb
+E:\Curso\Valpru\Practica2\FamilyTree\FamilyTree\bin\Debug\FamilyTree.dll
+E:\Curso\Valpru\Practica2\FamilyTree\FamilyTree\bin\Debug\FamilyTree.pdb
+E:\Curso\Valpru\Practica2\FamilyTree\FamilyTree\obj\Debug\FamilyTree.csproj.AssemblyReference.cache
+E:\Curso\Valpru\Practica2\FamilyTree\FamilyTree\obj\Debug\FamilyTree.csproj.CoreCompileInputs.cache
+E:\Curso\Valpru\Practica2\FamilyTree\FamilyTree\obj\Debug\FamilyTree.dll
+E:\Curso\Valpru\Practica2\FamilyTree\FamilyTree\obj\Debug\FamilyTree.pdb
