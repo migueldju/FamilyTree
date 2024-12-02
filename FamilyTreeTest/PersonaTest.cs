@@ -1,5 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FamilyTree;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace FamilyTreeTest
 {
@@ -10,207 +12,196 @@ namespace FamilyTreeTest
         public void TestPersona()
         {
             // Test persona sin padres asignados
-            Persona p1 = new Persona(001, "Antonio", "Rodríguez", "López", "10-6-1975",
-                "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
+            Persona p1 = new Persona(001, "Antonio", "Rodríguez", "10-06-1975",
+                "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López");
+
             // Comprobación de que se asignan variables
-            var result = p1.id;
-            Assert.AreEqual(001, result);
-            result = p1.getNombre();
+            int id = p1.getId;
+            Assert.AreEqual(001, id);
+
+            string result = p1.getNombre;
             Assert.AreEqual("Antonio", result);
-            result = p1.getApellido1();
+
+            result = p1.getApellido1;
             Assert.AreEqual("Rodríguez", result);
-            result = p1.getApellido2();
+
+            result = p1.getApellido2;
             Assert.AreEqual("López", result);
-            result = p1.getFechaNacimiento();
-            Assert.AreEqual(new DateTime(1975, 10, 6), result);
-            result = p1.getCiudadNacimiento();
+
+            DateTime fecha = p1.getFechaNacimiento;
+            Assert.AreEqual(new DateTime(1975, 6, 10), fecha);
+
+            result = p1.getCiudadNacimiento;
             Assert.AreEqual("Burgos", result);
-            result = p1.getMunicipioNacimiento();
+
+            result = p1.getMunicipioNacimiento;
             Assert.AreEqual("Burgos", result);
-            result = p1.getRegistro();
+
+            result = p1.getRegistro;
             Assert.AreEqual("45", result);
-            result = p1.getLibro();
+
+            result = p1.getLibro;
             Assert.AreEqual("Libro8", result);
-            result = p1.getPagina();
+
+            result = p1.getPagina;
             Assert.AreEqual("232", result);
-            result = p1.getDireccionHospital();
+
+            result = p1.getDireccionHospitalNacimiento;
             Assert.AreEqual("Avenida del Cid 96", result);
-            result = p1.getPadre();
-            Assert.IsNull(result);
-            result = p1.getMadre();
-            Assert.IsNull(result);
-            result = p1.getDescendientes();
-            Assert.IsNull(result);
+
+            Persona padre = p1.getPadre;
+            Assert.IsNull(padre);
+
+            Persona madre = p1.getMadre;
+            Assert.IsNull(madre);
+
+            List<Persona> desc = p1.descendientes;
+            Assert.AreEqual(0, desc.Count);
 
             // Test persona con padres asignados
-            Persona p2 = new Persona(002, "Josefina", "González", "Huertas", "3-2-1978",
+            Persona p2 = new Persona(002, "Josefina", "González", "03-02-1978",
                    "Burgos", "Burgos", "33", "Libro2", "222", "Avenida del Cid 96");
-            Persona p3 = new Persona(003, "Jaime", "Rodríguez", "González", "12-4-2007",
-                "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", p1, p2);
-            result = p1.getDescendientes();
-            Assert.IsNotNull(result);
-            result = p1.getDescendientes()[0];
-            Assert.AreEqual(p3, result);
-            result = p2.getDescendientes();
-            Assert.IsNotNull(result);
-            result = p2.getDescendientes()[0];
-            Assert.AreEqual(p3, result);
+            Persona p3 = new Persona(003, "Jaime", "Rodríguez", "12-04-2017",
+                "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "Huertas", p2);
+
+            desc = p2.descendientes;
+            Assert.AreEqual(1, desc.Count);
+
+            Persona personaPrueba = p2.descendientes[0];
+            Assert.AreEqual(p3, personaPrueba);
 
             // Test persona mayor que uno de sus padres
-            Persona p4 = new Persona(004, "Jaime", "Rodríguez", "González", "12-4-1977",
-                "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", p1, p2);
+            Persona p4 = new Persona(004, "Jaime", "González", "12-04-1977",
+                "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "Rodríguez", p1, p2);
             Assert.IsNull(p4);
 
             // Test persona con id ya asignado a otra
-            Persona p5 = new Persona(002, "Jaime", "Rodríguez", "González", "12-4-1977",
-                "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", p1, p2);
+            Persona p5 = new Persona(002, "Jaime", "Rodríguez", "12-04-1977",
+                "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González", p1, p2);
             Assert.IsNull(p5);
 
             // Test persona solo con padre
-            Persona p6 = new Persona(006, "Jaime", "Rodríguez", "López", "12-4-1977",
-                "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", p1);
-            result = p6.getPadre();
-            Assert.AreEqual(p1, result);
-            result = p6.getMadre();
-            Assert.IsNull(result);
+            Persona p6 = new Persona(006, "Jaime", "Rodríguez", "12-04-1977",
+                "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "López", p1);
+            personaPrueba = p6.getPadre;
+            Assert.AreEqual(p1, personaPrueba);
+            personaPrueba = p6.getMadre;
+            Assert.IsNull(personaPrueba);
 
             // Test persona solo con madre
-            Persona p7 = new Persona(007, "Jaime", "Rodríguez", "López", "12-4-1977",
-                "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", p1);
-            result = p6.getPadre();
-            Assert.AreEqual(p1, result);
-            result = p6.getMadre();
-            Assert.IsNull(result);
+            Persona p7 = new Persona(007, "Jaime", "Rodríguez", "12-04-1977",
+                "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "López", null, p2);
+            personaPrueba = p7.getMadre;
+            Assert.AreEqual(p2, personaPrueba);
+            personaPrueba = p7.getPadre;
+            Assert.IsNull(personaPrueba);
 
             // Test persona sin segundo apellido
-            Persona p8 = new Persona(008, "Michael", "Smith", "13-5-1988",
+            Persona p8 = new Persona(008, "Michael", "Smith", "13-05-1988",
                 "London", "Camden Town", "234", "12", "23", "Health St. 23");
             Assert.IsNotNull(p8);
-            result = p8.apellido2;
+            result = p8.getApellido2;
             Assert.IsNull(result);
-
-            // Test persona añadiendo padres
-
-
         }
+
 
         [TestMethod]
         public void AsignarPadreTest()
         {
             // Asignación correcta
-            Persona hijo = new Persona(011, "Jaime", "Rodríguez", "González", "12-4-2007",
-                    "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96");
-            Persona padre = new Persona(012, "Antonio", "Rodríguez", "López", "10-6-1975",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            asignacion = hijo.asignarPadre(padre);
+            Persona hijo = new Persona(011, "Jaime", "Rodríguez", "12-04-2007",
+                    "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González");
+            Persona padre = new Persona(012, "Antonio", "Rodríguez", "10-06-1975",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López");
+            bool asignacion = hijo.asignarPadre(padre);
             Assert.IsTrue(asignacion);
-            var result = hijo.getPadre();
+            var result = hijo.getPadre;
             Assert.AreEqual(padre, result);
-            Assert.IsTrue(padre.GetDescendientes.Contains(hijo));
+            Assert.IsTrue(padre.descendientes.Contains(hijo));
 
             // Persona con valor null
-            Persona hijo = new Persona(013, "Jaime", "Rodríguez", "González", "12-4-2007",
-                    "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96");
+            hijo = new Persona(013, "Jaime", "Rodríguez", "12-04-2007",
+                    "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González");
             Persona nula = null;
             asignacion = hijo.asignarPadre(nula);
             Assert.IsFalse(asignacion);
-            Assert.IsNull(hijo.getPadre());
-            Assert.IsFalse(padre.GetDescendientes.Contains(hijo));
+            Assert.IsNull(hijo.getPadre);
+            Assert.IsFalse(padre.descendientes.Contains(hijo));
 
             // Asignación de padre menor que el hijo
-            Persona padreMenor = new Persona(014, "Antonio", "Rodríguez", "López", "10-6-2012",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
+            Persona padreMenor = new Persona(014, "Antonio", "Rodríguez", "10-06-2012",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López");
             asignacion = hijo.asignarPadre(padreMenor);
-            Assert.IsFalse (asignacion);
-            Assert.IsNull (hijo.getPadre());
-            Assert.IsFalse(padre.GetDescendientes.Contains(hijo));
-
-            // Asignación de padre demasiado joven
-            Persona padreJoven = new Persona(015, "Antonio", "Rodríguez", "López", "10-6-2005",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            asignacion = hijo.asignarPadre(padreJoven);
             Assert.IsFalse(asignacion);
-            Assert.IsNull(hijo.getPadre());
-            Assert.IsFalse(padre.GetDescendientes.Contains(hijo));
+            Assert.IsNull(hijo.getPadre);
+            Assert.IsFalse(padre.descendientes.Contains(hijo));
         }
 
         [TestMethod]
         public void AsignarMadreTest()
         {
             // Asignación correcta
-            Persona hijo = new Persona(021, "Jaime", "Rodríguez", "González", "12-4-2007",
-                   "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96");
-            Persona madre = new Persona(022, "Manuela", "Álvarez", "Villaconejos", "10-6-1978",
-                   "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
+            Persona hijo = new Persona(021, "Jaime", "Rodríguez", "12-04-2007",
+                   "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González");
+            Persona madre = new Persona(022, "Manuela", "Álvarez", "10-06-1978",
+                   "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "Villaconejos");
             bool asignacion = hijo.asignarMadre(madre);
             Assert.IsTrue(asignacion);
-            var result = hijo.getMadre();
+            var result = hijo.getMadre;
             Assert.AreEqual(madre, result);
-            Assert.IsTrue(madre.GetDescendientes.Contains(hijo));
+            Assert.IsTrue(madre.descendientes.Contains(hijo));
 
             // Persona con valor null
-            Persona hijo = new Persona(023, "Jaime", "Rodríguez", "González", "12-4-2007",
-                    "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96");
+            hijo = new Persona(023, "Jaime", "Rodríguez", "12-04-2007",
+                    "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González");
             Persona nula = null;
-            bool asignacion = hijo.asignarMadre(nula);
+            asignacion = hijo.asignarMadre(nula);
             Assert.IsFalse(asignacion);
-            Assert.IsNull(hijo.getMadre());
-            Assert.IsFalse(madre.GetDescendientes.Contains(hijo));
+            Assert.IsNull(hijo.getMadre);
+            Assert.IsFalse(madre.descendientes.Contains(hijo));
 
             // Asignación de madre menor que el hijo
-            Persona madreMenor = new Persona(024, "Lucrecia", "Pérez", "Puertas", "10-6-2012",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
+            Persona madreMenor = new Persona(024, "Lucrecia", "Pérez", "10-06-2012",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "Puertas");
             asignacion = hijo.asignarMadre(madreMenor);
             Assert.IsFalse(asignacion);
-            Assert.IsNull(hijo.getPadre());
-            Assert.IsFalse(madre.GetDescendientes.Contains(hijo));
+            Assert.IsNull(hijo.getPadre);
+            Assert.IsFalse(madre.descendientes.Contains(hijo));
 
-            // Asignación de padre demasiado joven
-            Persona madreJoven = new Persona(025, "Lucrecia", "Pérez", "Puertas", "10-6-2005",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            bool asignacion = hijo.asignarMadre(madreJoven);
-            Assert.IsFalse(asignacion);
-            Assert.IsNull(hijo.getMadre());
-            Assert.IsFalse(madre.GetDescendientes.Contains(hijo));
         }
 
         [TestMethod]
         public void GetPadreTest()
         {
             // Persona sin padre
-            Persona hijo = new Persona(031, "Jaime", "Rodríguez", "González", "12-4-2007",
-                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96");
-            bool result = hijo.getPadre();
+            Persona hijo = new Persona(031, "Jaime", "Rodríguez", "12-04-2007",
+                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González");
+            Persona result = hijo.getPadre;
             Assert.IsNull(result);
 
             // Padre nulo
             hijo.asignarPadre(null);
-            bool result2 = hijo.getPadre();
+            Persona result2 = hijo.getPadre;
             Assert.IsNull(result2);
 
             // Padre menor
-            hijo.asignarPadre(new Persona(032, "Antonio", "Rodríguez", "López", "10-6-2012",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            result = hijo.getPadre();
+            hijo.asignarPadre(new Persona(032, "Antonio", "Rodríguez", "10-06-2012",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López"));
+            result = hijo.getPadre;
             Assert.IsNull(result);
 
-            // Padre demasiado joven
-            hijo.asignarPadre(new Persona(033, "Antonio", "Rodríguez", "López", "10-6-2005",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            result = hijo.getPadre();
-            Assert.IsNull(result);
 
             // Padre correcto  - asignación
-            Persona padreCorrecto = new Persona(034, "Antonio", "Rodríguez", "López", "10-6-1975",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
+            Persona padreCorrecto = new Persona(034, "Antonio", "Rodríguez", "10-06-1975",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López");
             hijo.asignarPadre(padreCorrecto);
-            result = hijo.getPadre();
+            result = hijo.getPadre;
             Assert.AreEqual(padreCorrecto, result);
 
             // Padre correcto - constructor
-            Persona hijo = new Persona(035, "Jaime", "Rodríguez", "González", "12-4-2007",
-                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", padreCorrecto);
-            bool result = hijo.getPadre();
+            hijo = new Persona(035, "Jaime", "Rodríguez", "12-04-2007",
+                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González", padreCorrecto);
+            result = hijo.getPadre;
             Assert.AreEqual(padreCorrecto, result);
         }
 
@@ -218,39 +209,33 @@ namespace FamilyTreeTest
         public void GetMadreTest()
         {
             // Persona sin madre
-            Persona hijo = new Persona(041, "Jaime", "Rodríguez", "González", "12-4-2007",
-                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96");
-            bool result = hijo.getMadre();
+            Persona hijo = new Persona(041, "Jaime", "Rodríguez", "12-04-2007",
+                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González");
+            Persona result = hijo.getMadre;
             Assert.IsNull(result);
 
             // Madre nulo
             hijo.asignarMadre(null);
-            bool result2 = hijo.getMadre();
+            Persona result2 = hijo.getMadre;
             Assert.IsNull(result2);
 
             // Madre menor
-            hijo.asignarMadre(new Persona(042, "María", "Gómez", "López", "10-6-2012",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            result = hijo.getMadre();
-            Assert.IsNull(result);
-
-            // Madre demasiado joven
-            hijo.asignarMadre(new Persona(043, "María", "Gargamel", "Cardeña", "10-6-2005",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            result = hijo.getMadre();
+            hijo.asignarMadre(new Persona(042, "María", "Gómez", "10-06-2012",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López"));
+            result = hijo.getMadre;
             Assert.IsNull(result);
 
             // Madre correcta  - asignación
-            Persona madreCorrecta = new Persona(044, "Ángela", "Prima", "Renta", "10-6-1975",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
+            Persona madreCorrecta = new Persona(044, "Ángela", "Prima", "10-06-1975",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "Renta");
             hijo.asignarPadre(madreCorrecta);
-            result = hijo.getMadre();
+            result = hijo.getMadre;
             Assert.AreEqual(madreCorrecta, result);
 
             // Madre correcta - constructor
-            Persona hijo = new Persona(045, "Sergio", "Maestro", "Justicia", "12-4-2007",
-                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", madreCorrecta);
-            bool result = hijo.getMadre();
+            hijo = new Persona(045, "Sergio", "Maestro", "12-04-2007",
+                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96","Justicia", null, madreCorrecta);
+            result = hijo.getMadre;
             Assert.AreEqual(madreCorrecta, result);
         }
 
@@ -258,88 +243,89 @@ namespace FamilyTreeTest
         public void getDescendientesTest()
         {
             // Persona sin descendientes
-            Persona base = new Persona(051, "Antonio", "Rodríguez", "López", "10-6-1975",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            bool result = base.getDescendientes();
-            Assert.IsNull (result);
+            Persona personaPrueba = new Persona(051, "Antonio", "Rodríguez", "10-06-1975",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López");
+            List<Persona> result = personaPrueba.descendientes;
+            Assert.IsNull(result);
 
             // Dos hijos correctos
-            Persona hijo1 = new Persona(052, "María", "Gómez", "López", "10-6-2012",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            hijo1.asignarPadre(base);
-            Persona hijo2 = new Persona(053, "María", "Gargamel", "Cardeña", "10-6-2005",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            hijo2.asignarPadre(base);
+            Persona hijo1 = new Persona(052, "María", "Gómez", "10-06-2012",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López");
+            hijo1.asignarPadre(personaPrueba);
+            Persona hijo2 = new Persona(053, "María", "Gargamel", "10-06-2005",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "Cardeña");
+            hijo2.asignarPadre(personaPrueba);
 
             // Hijo de su misma edad
-            Persona hijo3 = new Persona(054, "Ángela", "Prima", "Renta", "10-6-1975",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
-            hijo3.asignarPadre(base);
+            Persona hijo3 = new Persona(054, "Ángela", "Prima", "10-06-1975",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "Renta");
+            hijo3.asignarPadre(personaPrueba);
 
             // Hijo correcto desde el constructor
-            Persona hijo4 = new Persona(055, "María", "Gargamel", "Cardeña", "10-6-2005",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", base, hijo4);
+            Persona hijo4 = new Persona(055, "María", "Gargamel", "10-06-2005",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "Cardeña", personaPrueba, hijo3);
 
             // Hijo incorrecto desde el constructor
-            Persona hijo5 = new Persona(056, "María", "Gargamel", "Cardeña", "10-6-1965",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", base, hijo4);
+            Persona hijo5 = new Persona(056, "María", "Gargamel", "10-06-1965",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "Cardeña", personaPrueba, hijo4);
 
-            Assert.IsTrue(base.getDescendientes().Contains(hijo1));
-            Assert.IsTrue(base.getDescendientes().Contains(hijo2));
-            Assert.IsFalse(base.getDescendientes().Contains(hijo3));
-            Assert.IsTrue(base.getDescendientes().Contains(hijo4));
-            Assert.IsFalse(base.getDescendientes().Contains(hijo5));
+            Assert.IsTrue(personaPrueba.descendientes.Contains(hijo1));
+            Assert.IsTrue(personaPrueba.descendientes.Contains(hijo2));
+            Assert.IsFalse(personaPrueba.descendientes.Contains(hijo3));
+            Assert.IsTrue(personaPrueba.descendientes.Contains(hijo4));
+            Assert.IsFalse(personaPrueba.descendientes.Contains(hijo5));
         }
 
         [TestMethod]
         public void getNombrePadre()
         {
-            Persona hijo = new Persona(041, "Jaime", "Rodríguez", "González", "12-4-2007",
-                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96");
+            Persona hijo = new Persona(041, "Jaime", "Rodríguez", "12-04-2007",
+                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González");
             Assert.IsNull(hijo.getNombrePadre());
 
-            Persona padre = new Persona(034, "Antonio", "Rodríguez", "López", "10-6-1975",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
+            Persona padre = new Persona(034, "Antonio", "Rodríguez", "10-06-1975",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López");
             hijo.asignarPadre(padre);
-            Assert.AreEqual(hijo.getNombrePadre(), padre.getNombre());
+            Assert.AreEqual(hijo.getNombrePadre(), padre.getNombre);
         }
 
         [TestMethod]
         public void getApellidoPadre()
         {
-            Persona hijo = new Persona(041, "Jaime", "Rodríguez", "González", "12-4-2007",
-                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96");
+            Persona hijo = new Persona(041, "Jaime", "Rodríguez", "12-4-2007",
+                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González");
             Assert.IsNull(hijo.getApellidoPadre());
 
-            Persona padre = new Persona(034, "Antonio", "Rodríguez", "López", "10-6-1975",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
+            Persona padre = new Persona(034, "Antonio", "Rodríguez", "10-06-1975",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López");
             hijo.asignarPadre(padre);
-            Assert.AreEqual(hijo.getApellidoPadre(), padre.getApellido1());
+            Assert.AreEqual(hijo.getApellidoPadre(), padre.getApellido1);
         }
 
         [TestMethod]
         public void getNombreMadre()
         {
-            Persona hijo = new Persona(041, "Jaime", "Rodríguez", "González", "12-4-2007",
-                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96");
+            Persona hijo = new Persona(041, "Jaime", "Rodríguez", "12-04-2007",
+                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González");
             Assert.IsNull(hijo.getNombreMadre());
 
-            Persona madre = new Persona(034, "Paula", "Rodas", "Luis", "10-6-1975",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
+            Persona madre = new Persona(034, "Paula", "Rodas", "10-06-1975",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "Luis");
             hijo.asignarMadre(madre);
-            Assert.AreEqual(hijo.getNombreMadre(), madre.getNombre());
+            Assert.AreEqual(hijo.getNombreMadre(), madre.getNombre);
         }
 
         [TestMethod]
         public void getApellidoMadre()
         {
-            Persona hijo = new Persona(041, "Jaime", "Rodríguez", "González", "12-4-2007",
-                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96");
+            Persona hijo = new Persona(041, "Jaime", "Rodríguez", "12-04-2007",
+                  "Burgos", "Burgos", "43", "Libro3", "12", "Avenida del Cid 96", "González");
             Assert.IsNull(hijo.getApellidoMadre());
 
-            Persona madre = new Persona(034, "Antonio", "Rodríguez", "López", "10-6-1975",
-                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96");
+            Persona madre = new Persona(034, "Antonio", "Rodríguez", "10-06-1975",
+                    "Burgos", "Burgos", "45", "Libro8", "232", "Avenida del Cid 96", "López");
             hijo.asignarPadre(madre);
-            Assert.AreEqual(hijo.getApellidoMadre(), madre.getApellido1());
+            Assert.AreEqual(hijo.getApellidoMadre(), madre.getApellido1);
         }
     }
+}

@@ -1,0 +1,6 @@
+C:\Users\Miguel de Juan Urien\Documents\VyP\FamilyTree\FamilyTree\bin\Debug\FamilyTree.dll
+C:\Users\Miguel de Juan Urien\Documents\VyP\FamilyTree\FamilyTree\bin\Debug\FamilyTree.pdb
+C:\Users\Miguel de Juan Urien\Documents\VyP\FamilyTree\FamilyTree\obj\Debug\FamilyTree.csproj.AssemblyReference.cache
+C:\Users\Miguel de Juan Urien\Documents\VyP\FamilyTree\FamilyTree\obj\Debug\FamilyTree.csproj.CoreCompileInputs.cache
+C:\Users\Miguel de Juan Urien\Documents\VyP\FamilyTree\FamilyTree\obj\Debug\FamilyTree.dll
+C:\Users\Miguel de Juan Urien\Documents\VyP\FamilyTree\FamilyTree\obj\Debug\FamilyTree.pdb
